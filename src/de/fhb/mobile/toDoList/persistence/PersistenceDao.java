@@ -35,19 +35,23 @@ public abstract class PersistenceDao<T> {
 	 * constructor create the database connection.
 	 * 
 	 * @throws SQLException
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	protected PersistenceDao() throws SQLException {
+	protected PersistenceDao() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		this.connection = DriverManager.getConnection(DATABASEURL, USER,
 				PASSWORD);
 	}
 
 	public abstract T find(T entity) throws SQLException;
 
-	public abstract T findAll();
+	public abstract T findAll() throws SQLException;
 
-	public abstract void delete(T entity);
+	public abstract void delete(T entity) throws SQLException;
 
-	public abstract void persist(T entity);
+	public abstract void persist(T entity) throws SQLException;
 
-	public abstract void update(T entity);
+	public abstract void update(T entity) throws SQLException;
 }

@@ -16,8 +16,11 @@ public class UserDao extends PersistenceDao<User> {
 	/**
 	 * 
 	 * @throws SQLException
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	protected UserDao() throws SQLException {
+	protected UserDao() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		super();
 		// TODO Auto-generated constructor stub
 	}

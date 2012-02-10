@@ -13,7 +13,7 @@ import de.fhb.mobile.toDoList.entity.Todo;
  */
 public class TodoDao extends PersistenceDao<Todo> {
 
-	protected TodoDao() throws SQLException {
+	protected TodoDao() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		super();
 		
 	}
