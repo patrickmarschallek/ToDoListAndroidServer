@@ -36,7 +36,7 @@ public class TodoMapper {
 			todo.setName(result.getString("name"));
 			todo.setExpires(result.getDate("expires"));
 			todo.setDescription(result.getString("description"));
-			todo.setContacts(TodoMapper.contactDao.findAllByTodo());
+			todo.setContacts(TodoMapper.contactDao.findAllByTodoId(todo.getId()));
 			todo.setUser(TodoMapper.userDao.findById(result.getInt("userId")));
 		}
 		return todo;
@@ -59,7 +59,7 @@ public class TodoMapper {
 			todo.setName(result.getString("name"));
 			todo.setExpires(result.getDate("expires"));
 			todo.setDescription(result.getString("description"));
-			todo.setContacts(TodoMapper.contactDao.findAllByTodo());
+			todo.setContacts(TodoMapper.contactDao.findAllByTodoId(todo.getId()));
 			todo.setUser(TodoMapper.userDao.findById(result.getInt("userId")));
 			todoList.add(todo);
 		}

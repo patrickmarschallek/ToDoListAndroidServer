@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.fhb.mobile.toDoList.entity.Contact;
-import de.fhb.mobile.toDoList.entity.Todo;
 import de.fhb.mobile.toDoList.persistence.mapper.ContactMapper;
 
 /**
