@@ -18,7 +18,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 	private static final String TABLE = "todo";
 	private static final String JOINTABLE = "todo_contact";
 
-	protected TodoDao() throws SQLException, InstantiationException,
+	public TodoDao() throws SQLException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
 		super();
 

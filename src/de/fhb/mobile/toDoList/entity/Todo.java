@@ -17,6 +17,7 @@ public class Todo {
 	private boolean finished;
 	private boolean favourite;
 	private Date expires;
+	private Date lastChange;
 	private User user;
 	private List<Contact> contacts;
 
@@ -130,5 +131,13 @@ public class Todo {
 
 	public void setFavourite(boolean favourite) {
 		this.favourite = favourite;
+	}
+
+	public Date getLastChange() {
+		return lastChange;
+	}
+
+	public void setLastChange(Date lastChange) {
+		this.lastChange = lastChange;
 	}
 }

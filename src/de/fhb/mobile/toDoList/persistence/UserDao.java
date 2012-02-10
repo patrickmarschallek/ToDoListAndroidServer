@@ -24,7 +24,7 @@ public class UserDao extends PersistenceDao<User> {
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 */
-	protected UserDao() throws SQLException, InstantiationException,
+	public UserDao() throws SQLException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
 		super();
 		// TODO Auto-generated constructor stub
@@ -79,9 +79,16 @@ public class UserDao extends PersistenceDao<User> {
 	 * @throws SQLException
 	 */
 	public User findById(int id) throws SQLException {
-		String query = "SELECT * FORM " + TABLE + " c WHERE c.id = ?";
+		String query = "SELECT * FORM " + TABLE + " u WHERE u.id = ?";
 		PreparedStatement find = this.connection.prepareStatement(query);
 		find.setInt(1, id);
+		return UserMapper.mapToEntity(find.executeQuery());
+	}
+
+	public User findByUsername(String username) throws SQLException {
+		String query = "SELECT * FORM " + TABLE + " u WHERE u.username = ?";
+		PreparedStatement find = this.connection.prepareStatement(query);
+		find.setString(1, username);
 		return UserMapper.mapToEntity(find.executeQuery());
 	}
 

@@ -17,7 +17,7 @@ public class ContactDao extends PersistenceDao<Contact> {
 	private static final String TABLE = "contact";
 	private static final String JOINTABLE = "todo_contact";
 
-	protected ContactDao() throws SQLException, InstantiationException,
+	public ContactDao() throws SQLException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
 		super();
 	}
