@@ -15,6 +15,7 @@ public class Todo {
 	private String name;
 	private String description;
 	private boolean finished;
+	private boolean favourite;
 	private Date expires;
 	private User user;
 	private List<Contact> contacts;
@@ -121,5 +122,13 @@ public class Todo {
 	 */
 	public void setContacts(List<Contact> contacts) {
 		this.contacts = contacts;
+	}
+
+	public boolean isFavourite() {
+		return favourite;
+	}
+
+	public void setFavourite(boolean favourite) {
+		this.favourite = favourite;
 	}
 }
