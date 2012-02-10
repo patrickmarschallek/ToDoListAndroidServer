@@ -52,4 +52,9 @@ public class UserDao extends PersistenceDao<User> {
 		
 	}
 
+	public User findById(int int1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

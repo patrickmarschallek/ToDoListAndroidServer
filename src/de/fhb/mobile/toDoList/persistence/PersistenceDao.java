@@ -41,7 +41,7 @@ public abstract class PersistenceDao<T> {
 				PASSWORD);
 	}
 
-	public abstract T find(T entity);
+	public abstract T find(T entity) throws SQLException;
 
 	public abstract T findAll();
 
