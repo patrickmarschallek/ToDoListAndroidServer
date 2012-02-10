@@ -8,9 +8,9 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 
 /**
  * @author Patrick
@@ -29,6 +29,18 @@ public interface ITodoListService {
 	@Produces("application/json")
 	public String getAllTodo();
 
+	/**
+	 * get all your todos.
+	 * 
+	 * @return
+	 */
+	@PUT
+	@Path("/add")
+	@Produces("application/json")
+	@Consumes("application/x-www-form-urlencoded")
+	public String addTodo(@FormParam("todoListJson") String todoListJson);
+
+	
 	/**
 	 * delete a todo with given id.
 	 * 
@@ -50,8 +62,8 @@ public interface ITodoListService {
 	@POST
 	@Path("/authenticate")
 	@Produces("application/json")
-	public String authentificate(@QueryParam("username") String username,
-			@QueryParam("password") String password);
+	public String authentificate(@FormParam("username") String username,
+			@FormParam("password") String password);
 	
 	/**
 	 * synchronize local todolist with server todolist.
@@ -60,6 +72,7 @@ public interface ITodoListService {
 	 * @return
 	 */
 	@POST
+	@Path("/synchronize")
 	@Produces("application/json")
 	@Consumes("application/x-www-form-urlencoded")
 	public String synchronize(@FormParam("todoListJson") String todoListJson);

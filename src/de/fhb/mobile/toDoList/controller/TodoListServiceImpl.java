@@ -24,13 +24,19 @@ public class TodoListServiceImpl implements ITodoListService{
 	@Override
 	public String authentificate(String username, String password) {
 		// TODO Auto-generated method stub
-		return "{\"mesasge\": \"access denied\"}";
+		return "{\"mesasge\": \"access denied\", \"isAuthenticate\":0}";
 	}
 
 	@Override
 	public String synchronize(String todoListJson) {
 		// TODO Auto-generated method stub
-		return "{\"mesasge\": \"can not synchronize\"}";
+		return "{\"mesasge\": \"can not synchronize\",\"isSynchronize\":0}";
+	}
+
+	@Override
+	public String addTodo(String todoListJson) {
+		// TODO Auto-generated method stub
+		return "{}";
 	}
 
 }
