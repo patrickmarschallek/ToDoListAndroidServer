@@ -38,7 +38,7 @@ public class UserAuthenticationBusinessLogic {
 	 * @throws SQLException 
 	 */
 	public boolean authenticate(User user) throws SQLException {
-		User loggedIn = this.userDao.find(user);
+		User loggedIn = this.userDao.findByCredentials(user.getUsername(), user.getPassword());
 		if(loggedIn != null)
 			return true;
 		else{
@@ -50,4 +50,9 @@ public class UserAuthenticationBusinessLogic {
 				return false;
 		}
 	}
+
+	public User findUser(String username, String password) throws SQLException {
+		return this.userDao.findByCredentials(username,password);
+	}
+
 }

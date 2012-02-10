@@ -5,8 +5,10 @@ package de.fhb.mobile.toDoList.persistence;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import de.fhb.mobile.toDoList.entity.Todo;
+import de.fhb.mobile.toDoList.entity.User;
 import de.fhb.mobile.toDoList.persistence.mapper.TodoMapper;
 
 /**
@@ -15,9 +17,22 @@ import de.fhb.mobile.toDoList.persistence.mapper.TodoMapper;
  */
 public class TodoDao extends PersistenceDao<Todo> {
 
+	/**
+	 * table name.
+	 */
 	private static final String TABLE = "todo";
+	/**
+	 * join table name.
+	 */
 	private static final String JOINTABLE = "todo_contact";
 
+	/**
+	 * 
+	 * @throws SQLException
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 */
 	public TodoDao() throws SQLException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException {
 		super();
@@ -59,7 +74,6 @@ public class TodoDao extends PersistenceDao<Todo> {
 
 	@Override
 	public void persist(Todo entity) throws SQLException {
-		// TODO
 		String query = "INSERT INTO "
 				+ TABLE
 				+ " (`name`,`description`,`finished`,`favourite`,`expire`,`lastChange`,`userId`)"
@@ -77,7 +91,6 @@ public class TodoDao extends PersistenceDao<Todo> {
 
 	@Override
 	public void update(Todo entity) throws SQLException {
-		// TODO
 		String query = "UPDATE "
 				+ TABLE
 				+ " c SET name = ?,SET description = ?,SET finished = ?,SET favourite = ?,SET expire = ?,SET lastChange = ?,SET userId = ? "
@@ -92,6 +105,20 @@ public class TodoDao extends PersistenceDao<Todo> {
 		update.setInt(7, entity.getUser().getId());
 		update.setInt(8, entity.getId());
 		update.executeUpdate();
+	}
+
+	/**
+	 * give all todos from the user.
+	 * 
+	 * @param user
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Todo> findAllByUser(User user) throws SQLException {
+		String query = "SELECT * FORM " + TABLE + " c WHERE c.userId = ?";
+		PreparedStatement find = this.connection.prepareStatement(query);
+		find.setInt(1, user.getId());
+		return TodoMapper.mapToEntityList(find.executeQuery());
 	}
 
 }

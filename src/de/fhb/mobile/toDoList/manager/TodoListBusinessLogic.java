@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.fhb.mobile.toDoList.entity.Todo;
+import de.fhb.mobile.toDoList.entity.User;
 import de.fhb.mobile.toDoList.persistence.ContactDao;
 import de.fhb.mobile.toDoList.persistence.TodoDao;
 
@@ -50,6 +51,10 @@ public class TodoListBusinessLogic {
 			}
 		}
 		return todoList;
+	}
+
+	public List<Todo> findAllTodo(User user) throws SQLException {
+		return this.todoDao.findAllByUser(user);
 	}
 	
 }

@@ -37,14 +37,14 @@ public class UserDao extends PersistenceDao<User> {
 
 	@Override
 	public User findAll() throws SQLException {
-		String query = "SELECT * FORM " + TABLE;
+		String query = "SELECT * FROM " + TABLE;
 		PreparedStatement find = this.connection.prepareStatement(query);
 		return UserMapper.mapToEntity(find.executeQuery());
 	}
 
 	@Override
 	public void delete(User entity) throws SQLException {
-		String query = "DELETE FORM " + TABLE + " c WHERE c.id = ?";
+		String query = "DELETE FROM " + TABLE + " c WHERE c.id = ?";
 		PreparedStatement delete = this.connection.prepareStatement(query);
 		delete.setInt(1, entity.getId());
 		delete.execute();
@@ -79,16 +79,24 @@ public class UserDao extends PersistenceDao<User> {
 	 * @throws SQLException
 	 */
 	public User findById(int id) throws SQLException {
-		String query = "SELECT * FORM " + TABLE + " u WHERE u.id = ?";
+		String query = "SELECT * FROM " + TABLE + " u WHERE u.id = ?";
 		PreparedStatement find = this.connection.prepareStatement(query);
 		find.setInt(1, id);
 		return UserMapper.mapToEntity(find.executeQuery());
 	}
 
 	public User findByUsername(String username) throws SQLException {
-		String query = "SELECT * FORM " + TABLE + " u WHERE u.username = ?";
+		String query = "SELECT * FROM " + TABLE + " u WHERE u.username = ?";
 		PreparedStatement find = this.connection.prepareStatement(query);
 		find.setString(1, username);
+		return UserMapper.mapToEntity(find.executeQuery());
+	}
+
+	public User findByCredentials(String username, String password) throws SQLException {
+		String query = "SELECT * FROM " + TABLE + " u WHERE u.username = ? AND u.password = ?";
+		PreparedStatement find = this.connection.prepareStatement(query);
+		find.setString(1, username);
+		find.setString(2, password);
 		return UserMapper.mapToEntity(find.executeQuery());
 	}
 
