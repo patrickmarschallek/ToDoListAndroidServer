@@ -101,10 +101,24 @@ public class TodoListServiceImpl implements ITodoListService {
 		return json.toString();
 	}
 
+	@SuppressWarnings("finally")
 	@Override
 	public String synchronize(String todoListJson) {
-		// TODO Auto-generated method stub
-		return "{\"mesasge\": \"can not synchronize\",\"isSynchronize\":0}";
+		JSONObject json;
+		try {
+			json = new JSONObject(todoListJson);
+		
+			for (int i = 0; i < json.getJSONArray("todoListJson").length(); i++) {
+				Object todo = json.getJSONArray("todoListJson").get(i);
+				System.out.println((Todo)todo);
+			}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			return "{\"mesasge\": \"can not synchronize\",\"isSynchronize\":0}";
+		}
 	}
 
 	@Override

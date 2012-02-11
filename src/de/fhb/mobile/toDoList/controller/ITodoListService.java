@@ -11,7 +11,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 
 /**
  * @author Patrick
@@ -63,6 +62,7 @@ public interface ITodoListService {
 	@POST
 	@Path("/authenticate")
 	@Produces("application/json")
+	@Consumes("application/x-www-form-urlencoded")
 	public String authentificate(@FormParam("username") String username,
 			@FormParam("password") String password);
 	
