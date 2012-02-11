@@ -63,8 +63,8 @@ public interface ITodoListService {
 	@POST
 	@Path("/authenticate")
 	@Produces("application/json")
-	public String authentificate(@QueryParam("username") String username,
-			@QueryParam("password") String password);
+	public String authentificate(@FormParam("username") String username,
+			@FormParam("password") String password);
 	
 	/**
 	 * synchronize local todolist with server todolist.
