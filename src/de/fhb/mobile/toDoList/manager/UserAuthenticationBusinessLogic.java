@@ -39,11 +39,11 @@ public class UserAuthenticationBusinessLogic {
 	 */
 	public boolean authenticate(User user) throws SQLException {
 		User loggedIn = this.userDao.findByCredentials(user.getUsername(), user.getPassword());
-		if(loggedIn != null)
+		if(loggedIn.getId() != 0)
 			return true;
 		else{
 			User newUser = this.userDao.findByUsername(user.getUsername());
-			if(newUser == null){
+			if(newUser.getId() == 0){
 				this.userDao.persist(user);
 				return true;
 			}else

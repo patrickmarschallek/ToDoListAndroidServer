@@ -52,16 +52,16 @@ public class UserDao extends PersistenceDao<User> {
 
 	@Override
 	public void persist(User entity) throws SQLException {
-		// TODO
-		String query = "INSERT INTO " + TABLE + " (`username`,`password`) VALUES ('?',`?`)";
+		String query = "INSERT INTO " + TABLE + " (`username`,`password`) VALUES (?,?)";
 		PreparedStatement persist = this.connection.prepareStatement(query);
 		persist.setString(1, entity.getUsername());
 		persist.setString(2, entity.getPassword());
-		persist.execute();
+		persist.executeUpdate();
 	}
 
 	@Override
 	public void update(User entity) throws SQLException {
+		System.out.println(entity);
 		String query = "UPDATE " + TABLE
 				+ " u SET username = ? ,password = ? WHERE u.id = ?)";
 		PreparedStatement update = this.connection.prepareStatement(query);
@@ -85,6 +85,12 @@ public class UserDao extends PersistenceDao<User> {
 		return UserMapper.mapToEntity(find.executeQuery());
 	}
 
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 * @throws SQLException
+	 */
 	public User findByUsername(String username) throws SQLException {
 		String query = "SELECT * FROM " + TABLE + " u WHERE u.username = ?";
 		PreparedStatement find = this.connection.prepareStatement(query);
@@ -92,6 +98,13 @@ public class UserDao extends PersistenceDao<User> {
 		return UserMapper.mapToEntity(find.executeQuery());
 	}
 
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws SQLException
+	 */
 	public User findByCredentials(String username, String password) throws SQLException {
 		String query = "SELECT * FROM " + TABLE + " u WHERE u.username = ? AND u.password = ?";
 		PreparedStatement find = this.connection.prepareStatement(query);

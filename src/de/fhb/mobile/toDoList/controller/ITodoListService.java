@@ -11,6 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 /**
  * @author Patrick
@@ -62,8 +63,8 @@ public interface ITodoListService {
 	@POST
 	@Path("/authenticate")
 	@Produces("application/json")
-	public String authentificate(@FormParam("username") String username,
-			@FormParam("password") String password);
+	public String authentificate(@QueryParam("username") String username,
+			@QueryParam("password") String password);
 	
 	/**
 	 * synchronize local todolist with server todolist.
