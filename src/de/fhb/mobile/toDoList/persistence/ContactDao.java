@@ -24,7 +24,7 @@ public class ContactDao extends PersistenceDao<Contact> {
 
 	@Override
 	public Contact find(Contact entity) throws SQLException {
-		String query = "SELECT * FORM " + TABLE + " c WHERE c.id = ?";
+		String query = "SELECT * FROM " + TABLE + " c WHERE c.id = ?";
 
 		PreparedStatement find = this.connection.prepareStatement(query);
 		find.setInt(1, entity.getId());
@@ -34,7 +34,7 @@ public class ContactDao extends PersistenceDao<Contact> {
 
 	@Override
 	public Contact findAll() throws SQLException {
-		String query = "SELECT * FORM " + TABLE;
+		String query = "SELECT * FROM " + TABLE;
 		PreparedStatement find = this.connection.prepareStatement(query);
 		return ContactMapper.mapToEntity(find.executeQuery());
 	}
@@ -42,8 +42,8 @@ public class ContactDao extends PersistenceDao<Contact> {
 	@Override
 	public void delete(Contact entity) throws SQLException {
 		this.connection.setAutoCommit(false);
-		String query = "DELETE FORM " + TABLE + " c WHERE c.id = ?";
-		String queryJoin = "DELETE FORM " + JOINTABLE
+		String query = "DELETE FROM " + TABLE + " c WHERE c.id = ?";
+		String queryJoin = "DELETE FROM " + JOINTABLE
 				+ " tc WHERE tc.contactId = ?";
 		PreparedStatement delete = this.connection.prepareStatement(query);
 		delete.setInt(1, entity.getId());
@@ -57,7 +57,7 @@ public class ContactDao extends PersistenceDao<Contact> {
 
 	@Override
 	public void persist(Contact entity) throws SQLException {
-		String query = "INSERT INTO " + TABLE + " (`contactId`) VALUES ('?')";
+		String query = "INSERT INTO " + TABLE + " (`contactId`) VALUES (?)";
 		PreparedStatement persist = this.connection.prepareStatement(query);
 		persist.setInt(1, entity.getId());
 		persist.execute();
@@ -80,7 +80,7 @@ public class ContactDao extends PersistenceDao<Contact> {
 	 * @throws SQLException
 	 */
 	public List<Contact> findAllByTodoId(int id) throws SQLException {
-		String query = "SELECT c.* FORM " + TABLE + " c INNER JOIN "+JOINTABLE+" tc ON tc.todoId = ?";
+		String query = "SELECT c.* FROM " + TABLE + " c INNER JOIN "+JOINTABLE+" tc ON tc.todoId = ?";
 
 		PreparedStatement find = this.connection.prepareStatement(query);
 		find.setInt(1, id);

@@ -41,7 +41,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 
 	@Override
 	public Todo find(Todo entity) throws SQLException {
-		String query = "SELECT * FORM " + TABLE + " c WHERE c.id = ?";
+		String query = "SELECT * FROM " + TABLE + " c WHERE c.id = ?";
 
 		PreparedStatement find = this.connection.prepareStatement(query);
 		find.setInt(1, entity.getId());
@@ -51,7 +51,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 
 	@Override
 	public Todo findAll() throws SQLException {
-		String query = "SELECT * FORM " + TABLE;
+		String query = "SELECT * FROM " + TABLE;
 		PreparedStatement find = this.connection.prepareStatement(query);
 		return TodoMapper.mapToEntity(find.executeQuery());
 	}
@@ -59,8 +59,8 @@ public class TodoDao extends PersistenceDao<Todo> {
 	@Override
 	public void delete(Todo entity) throws SQLException {
 		this.connection.setAutoCommit(false);
-		String query = "DELETE FORM " + TABLE + " t WHERE t.id = ?";
-		String queryJoin = "DELETE FORM " + JOINTABLE
+		String query = "DELETE FROM " + TABLE + " t WHERE t.id = ?";
+		String queryJoin = "DELETE FROM " + JOINTABLE
 				+ " tc WHERE tc.todoId = ?";
 		PreparedStatement delete = this.connection.prepareStatement(query);
 		delete.setInt(1, entity.getId());
@@ -77,7 +77,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 		String query = "INSERT INTO "
 				+ TABLE
 				+ " (`name`,`description`,`finished`,`favourite`,`expire`,`lastChange`,`userId`)"
-				+ " VALUES ('?','?','?','?','?','?','?')";
+				+ " VALUES (?,?,?,?,?,?,?)";
 		PreparedStatement persist = this.connection.prepareStatement(query);
 		persist.setString(1, entity.getName());
 		persist.setString(2, entity.getDescription());
@@ -115,7 +115,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 	 * @throws SQLException
 	 */
 	public List<Todo> findAllByUser(User user) throws SQLException {
-		String query = "SELECT * FORM " + TABLE + " c WHERE c.userId = ?";
+		String query = "SELECT * FROM " + TABLE + " c WHERE c.userId = ?";
 		PreparedStatement find = this.connection.prepareStatement(query);
 		find.setInt(1, user.getId());
 		return TodoMapper.mapToEntityList(find.executeQuery());
