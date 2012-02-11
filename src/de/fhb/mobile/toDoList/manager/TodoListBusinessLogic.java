@@ -33,32 +33,41 @@ public class TodoListBusinessLogic {
 		this.contactDao = new ContactDao();
 		this.todoDao = new TodoDao();
 	}
-	
+
 	/**
 	 * synchronize local android todolist with server todos.
 	 * 
 	 * @param todoList
 	 * @return synchronized list.
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public List<Todo> synchronize(List<Todo> todoList) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
-		//TODO nicht vorhandene prüfen local and remote
-		for(Todo t:todoList){
+	public List<Todo> synchronize(List<Todo> todoList) throws SQLException,
+			InstantiationException, IllegalAccessException,
+			ClassNotFoundException {
+		// TODO nicht vorhandene prüfen local and remote
+		for (Todo t : todoList) {
 			Todo databaseTodo = this.todoDao.find(t);
-			if(databaseTodo.getLastChange().getTime() <= t.getLastChange().getTime()){
-				this.todoDao.update(t);
-			}else{
-				t = databaseTodo;
+			if (databaseTodo.getId() == 0) {
+				this.todoDao.persist(t);
+			} else {
+				if (databaseTodo.getLastChange().getTime() <= t.getLastChange()
+						.getTime()) {
+					this.todoDao.update(t);
+				} else {
+					t = databaseTodo;
+				}
 			}
 		}
 		return todoList;
 	}
 
-	public List<Todo> findAllTodo(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public List<Todo> findAllTodo(User user) throws SQLException,
+			InstantiationException, IllegalAccessException,
+			ClassNotFoundException {
 		return this.todoDao.findAllByUser(user);
 	}
-	
+
 }
