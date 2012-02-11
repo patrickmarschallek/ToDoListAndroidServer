@@ -45,9 +45,9 @@ public abstract class PersistenceDao<T> {
 				PASSWORD);
 	}
 
-	public abstract T find(T entity) throws SQLException;
+	public abstract T find(T entity) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException;
 
-	public abstract T findAll() throws SQLException;
+	public abstract T findAll() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException;
 
 	public abstract void delete(T entity) throws SQLException;
 

@@ -4,11 +4,15 @@
 package de.fhb.mobile.toDoList.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.fhb.mobile.toDoList.controller.marshalling.TodoMarshaller;
+import de.fhb.mobile.toDoList.controller.unmarshalling.TodoUnmarshaller;
 import de.fhb.mobile.toDoList.entity.Todo;
 import de.fhb.mobile.toDoList.entity.User;
 import de.fhb.mobile.toDoList.manager.TodoListBusinessLogic;
@@ -63,6 +67,15 @@ public class TodoListServiceImpl implements ITodoListService {
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return json.toString();
 	}
@@ -104,29 +117,24 @@ public class TodoListServiceImpl implements ITodoListService {
 	@SuppressWarnings("finally")
 	@Override
 	public String synchronize(String todoListJson) {
-		JSONObject json;
+		JSONObject json = null;
+		JSONArray jsonArray;
+		List<Todo> todoList = new ArrayList<Todo>();
 
 		try {
-			List<Todo> todolist = this.todoManager.findAllTodo(new User());
+			json = new JSONObject(todoListJson);
 
-			json = new JSONObject();
-			 json.put("list", todolist);
-			// json = new JSONObject(todoListJson);
-			System.out.println(json.toString());
-			for (int i = 0; i < json.getJSONArray("list").length(); i++) {
-				Object todo = json.getJSONArray("list").get(i);
-				System.out.println((Todo) todo);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
+			todoList = TodoUnmarshaller.unmarshallList(json
+					.getJSONArray("list"));
+			todoList = this.todoManager.synchronize(todoList);
+			jsonArray = TodoMarshaller.marshallList(todoList);
+			json.put("list", jsonArray);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("exception");
+			json = this.exceptionJson(e);
 		} finally {
-			return "{\"mesasge\": \"can not synchronize\",\"isSynchronize\":0}";
+			return json.toString();
 		}
 	}
 

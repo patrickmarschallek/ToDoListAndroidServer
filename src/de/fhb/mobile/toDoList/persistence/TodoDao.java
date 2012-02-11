@@ -40,7 +40,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 	}
 
 	@Override
-	public Todo find(Todo entity) throws SQLException {
+	public Todo find(Todo entity) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String query = "SELECT * FROM " + TABLE + " c WHERE c.id = ?";
 
 		PreparedStatement find = this.connection.prepareStatement(query);
@@ -50,7 +50,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 	}
 
 	@Override
-	public Todo findAll() throws SQLException {
+	public Todo findAll() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String query = "SELECT * FROM " + TABLE;
 		PreparedStatement find = this.connection.prepareStatement(query);
 		return TodoMapper.mapToEntity(find.executeQuery());
@@ -113,8 +113,11 @@ public class TodoDao extends PersistenceDao<Todo> {
 	 * @param user
 	 * @return
 	 * @throws SQLException
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public List<Todo> findAllByUser(User user) throws SQLException {
+	public List<Todo> findAllByUser(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		String query = "SELECT * FROM " + TABLE + " c WHERE c.userId = ?";
 		PreparedStatement find = this.connection.prepareStatement(query);
 		find.setInt(1, 1/*user.getId()*/);

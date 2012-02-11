@@ -40,8 +40,12 @@ public class TodoListBusinessLogic {
 	 * @param todoList
 	 * @return synchronized list.
 	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public List<Todo> synchronize(List<Todo> todoList) throws SQLException{
+	public List<Todo> synchronize(List<Todo> todoList) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
+		//TODO nicht vorhandene prüfen local and remote
 		for(Todo t:todoList){
 			Todo databaseTodo = this.todoDao.find(t);
 			if(databaseTodo.getLastChange().getTime() <= t.getLastChange().getTime()){
@@ -53,7 +57,7 @@ public class TodoListBusinessLogic {
 		return todoList;
 	}
 
-	public List<Todo> findAllTodo(User user) throws SQLException {
+	public List<Todo> findAllTodo(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		return this.todoDao.findAllByUser(user);
 	}
 	
