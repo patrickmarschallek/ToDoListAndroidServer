@@ -34,7 +34,7 @@ public class TodoMapper {
 			todo.setId(result.getInt("id"));
 			todo.setFinished(result.getBoolean("finished"));
 			todo.setName(result.getString("name"));
-			todo.setExpires(result.getDate("expires"));
+			todo.setExpires(result.getDate("expire"));
 			todo.setDescription(result.getString("description"));
 			todo.setContacts(TodoMapper.contactDao.findAllByTodoId(todo.getId()));
 			todo.setUser(TodoMapper.userDao.findById(result.getInt("userId")));
@@ -57,7 +57,7 @@ public class TodoMapper {
 			todo.setId(result.getInt("id"));
 			todo.setFinished(result.getBoolean("finished"));
 			todo.setName(result.getString("name"));
-			todo.setExpires(result.getDate("expires"));
+			todo.setExpires(result.getDate("expire"));
 			todo.setDescription(result.getString("description"));
 			todo.setContacts(TodoMapper.contactDao.findAllByTodoId(todo.getId()));
 			todo.setUser(TodoMapper.userDao.findById(result.getInt("userId")));

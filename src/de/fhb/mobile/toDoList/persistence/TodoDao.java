@@ -117,7 +117,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 	public List<Todo> findAllByUser(User user) throws SQLException {
 		String query = "SELECT * FROM " + TABLE + " c WHERE c.userId = ?";
 		PreparedStatement find = this.connection.prepareStatement(query);
-		find.setInt(1, user.getId());
+		find.setInt(1, 1/*user.getId()*/);
 		return TodoMapper.mapToEntityList(find.executeQuery());
 	}
 
