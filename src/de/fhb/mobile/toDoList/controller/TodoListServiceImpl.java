@@ -117,11 +117,10 @@ public class TodoListServiceImpl implements ITodoListService {
 	@SuppressWarnings("finally")
 	@Override
 	public String synchronize(String todoListJson) {
-		System.out.println("synchronize");
 		JSONObject json = null;
 		JSONArray jsonArray;
 		List<Todo> todoList = new ArrayList<Todo>();
-		
+		System.out.println(todoListJson);
 		try {
 			json = new JSONObject(todoListJson);
 

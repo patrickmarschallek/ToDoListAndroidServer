@@ -10,6 +10,8 @@ import de.fhb.mobile.toDoList.persistence.TodoDao;
 
 public class TodoListBusinessLogic {
 
+	private static final User USER = new User(1,"","");
+
 	/**
 	 * datacces to contact table.
 	 */
@@ -48,17 +50,21 @@ public class TodoListBusinessLogic {
 			InstantiationException, IllegalAccessException,
 			ClassNotFoundException {
 		// TODO nicht vorhandene prüfen local and remote
-		for (Todo t : todoList) {
-			Todo databaseTodo = this.todoDao.find(t);
-			System.out.println("mal sehen");
-			if (databaseTodo.getId() == 0) {
-				this.todoDao.persist(t);
-			} else {
-				if (databaseTodo.getLastChange().getTime() <= t.getLastChange()
-						.getTime()) {
-					this.todoDao.update(t);
+		if (todoList.size() == 0) {
+			todoList = this.todoDao.findAllByUser(USER);
+		} else {
+			for (Todo t : todoList) {
+				Todo databaseTodo = this.todoDao.find(t);
+				System.out.println("mal sehen");
+				if (databaseTodo.getId() == 0) {
+					this.todoDao.persist(t);
 				} else {
-					t = databaseTodo;
+					if (databaseTodo.getLastChange().getTime() <= t
+							.getLastChange().getTime()) {
+						this.todoDao.update(t);
+					} else {
+						t = databaseTodo;
+					}
 				}
 			}
 		}
