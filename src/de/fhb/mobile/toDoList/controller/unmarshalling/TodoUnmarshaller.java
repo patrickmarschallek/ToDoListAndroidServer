@@ -32,7 +32,7 @@ public class TodoUnmarshaller {
 		todo.setExpires(new Date(todoJson.getLong("expire")));System.out.println(i++);
 		todo.setLastChange(new Date(todoJson.getLong("lastChange")));System.out.println(i++);
 		todo.setName(todoJson.getString("name"));System.out.println(i++);
-		todo.setUser(UserUnmarshaller.unmarshall(todoJson.getJSONObject("user")));System.out.println(i++);
+		//todo.setUser(UserUnmarshaller.unmarshall(todoJson.getJSONObject("user")));System.out.println(i++);
 		todo.setContacts(ContactUnmarshaller.unmarshallList(todoJson.getJSONArray("contacts")));System.out.println(i++);
 		
 		return todo;
