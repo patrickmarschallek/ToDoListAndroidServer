@@ -93,7 +93,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 	public void update(Todo entity) throws SQLException {
 		String query = "UPDATE "
 				+ TABLE
-				+ " c SET name = ?,SET description = ?,SET finished = ?,SET favourite = ?,SET expire = ?,SET lastChange = ?,SET userId = ? "
+				+ " c SET name = ?, description = ?, finished = ?, favourite = ?, expire = ?, lastChange = ?, userId = ? "
 				+ "WHERE c.id = ?)";
 		PreparedStatement update = this.connection.prepareStatement(query);
 		update.setString(1, entity.getName());
