@@ -21,7 +21,7 @@ public class ContactUnmarshaller {
 	public static Contact unmarshall(JSONObject contactJson) throws JSONException {
 		Contact contact = new Contact();
 		contact.setContactId(contactJson.getInt("contactId"));
-		contact.setId(contactJson.getInt("id"));
+		//contact.setId(contactJson.getInt("id"));
 		return contact;
 	}
 
