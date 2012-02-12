@@ -24,10 +24,10 @@ public class ContactMarshaller {
 		return json;
 	}
 	
-	public static JSONArray marshallList(List<Contact> contacts) {
+	public static JSONArray marshallList(List<Contact> contacts) throws JSONException, ParseException {
 		JSONArray jsonArray = new JSONArray();
 		for(Contact c : contacts)
-			jsonArray.put(c);
+			jsonArray.put(ContactMarshaller.marshall(c));
 		return jsonArray;
 	}
 
