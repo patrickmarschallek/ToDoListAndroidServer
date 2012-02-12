@@ -55,12 +55,17 @@ public class TodoListBusinessLogic {
 		} else {
 			for (Todo t : todoList) {
 				Todo databaseTodo = this.todoDao.find(t);
+				System.out.println(databaseTodo);
 				if (databaseTodo.getId() == 0) {
+					System.out.println("try persist");
 					this.todoDao.persist(t);
+					System.out.println("after persist");
 				} else {
 					if (databaseTodo.getLastChange().getTime() <= t
 							.getLastChange().getTime()) {
+						System.out.println("try update");
 						this.todoDao.update(t);
+						System.out.println("after update");
 					} else {
 						t = databaseTodo;
 					}
