@@ -22,8 +22,8 @@ public class TodoMarshaller {
 		json.put("description", todo.getDescription());
 		json.put("favourite", todo.isFavourite());
 		json.put("finished", todo.isFinished());
-		json.put("expire", todo.getExpires());
-		json.put("lastChange", todo.getLastChange());
+		json.put("expire", todo.getExpires().getTime());
+		json.put("lastChange", todo.getLastChange().getTime());
 		json.put("name",todo.getName());
 		json.put("id", todo.getId());
 		json.put("user", UserMarshaller.marshall(todo.getUser()));

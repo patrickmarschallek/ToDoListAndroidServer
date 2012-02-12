@@ -136,6 +136,7 @@ public class TodoListServiceImpl implements ITodoListService {
 			json = this.exceptionJson(e);
 			json.put("isSynchronize", false);
 		} finally {
+			System.out.println(json);
 			return json.toString();
 		}
 	}
