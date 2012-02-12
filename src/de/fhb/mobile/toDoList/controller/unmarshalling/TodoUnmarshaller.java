@@ -26,14 +26,15 @@ public class TodoUnmarshaller {
 		Todo todo = new Todo();
 		int i = 0;
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		todo.setDescription(todoJson.getString("description"));System.out.println(i++);
-		todo.setFavourite(todoJson.getBoolean("favourite"));System.out.println(i++);
-		todo.setFinished(todoJson.getBoolean("finished"));System.out.println(todoJson.getString("expire"));
-		todo.setExpires(new Date(todoJson.getLong("expire")));System.out.println(i++);
-		todo.setLastChange(new Date(todoJson.getLong("lastChange")));System.out.println(i++);
-		todo.setName(todoJson.getString("name"));System.out.println(i++);
+		todo.setDescription(todoJson.getString("description"));
+		todo.setFavourite(todoJson.getBoolean("favourite"));
+		todo.setId(todoJson.getInt("id"));
+		todo.setFinished(todoJson.getBoolean("finished"));
+		todo.setExpires(new Date(todoJson.getLong("expire")));
+		todo.setLastChange(new Date(todoJson.getLong("lastChange")));
+		todo.setName(todoJson.getString("name"));
 		//todo.setUser(UserUnmarshaller.unmarshall(todoJson.getJSONObject("user")));System.out.println(i++);
-		todo.setContacts(ContactUnmarshaller.unmarshallList(todoJson.getJSONArray("contacts")));System.out.println(i++);
+		todo.setContacts(ContactUnmarshaller.unmarshallList(todoJson.getJSONArray("contacts")));
 		
 		return todo;
 	}
