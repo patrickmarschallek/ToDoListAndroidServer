@@ -130,7 +130,7 @@ public class TodoListServiceImpl implements ITodoListService {
 			jsonArray = TodoMarshaller.marshallList(todoList);
 			json.put("list", jsonArray);
 			json.put("isSynchronize", true);
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			json = this.exceptionJson(e);

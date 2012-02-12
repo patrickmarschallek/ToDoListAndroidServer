@@ -86,7 +86,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 		persist.setDate(5, new java.sql.Date(entity.getExpires().getTime()));
 		persist.setDate(6, new java.sql.Date(System.currentTimeMillis()));
 		persist.setInt(7, entity.getUser().getId());
-		persist.execute();
+		persist.executeUpdate();
 	}
 
 	@Override

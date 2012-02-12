@@ -55,7 +55,6 @@ public class TodoListBusinessLogic {
 		} else {
 			for (Todo t : todoList) {
 				Todo databaseTodo = this.todoDao.find(t);
-				System.out.println("mal sehen");
 				if (databaseTodo.getId() == 0) {
 					this.todoDao.persist(t);
 				} else {
