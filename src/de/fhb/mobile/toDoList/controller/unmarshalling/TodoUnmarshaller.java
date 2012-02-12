@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -23,15 +24,17 @@ public class TodoUnmarshaller {
 
 	public static Todo unmarshall(JSONObject todoJson) throws JSONException, ParseException {
 		Todo todo = new Todo();
+		int i = 0;
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		todo.setDescription(todoJson.getString("description"));
-		todo.setFavourite(todoJson.getBoolean("favourite"));
-		todo.setFinished(todoJson.getBoolean("finished"));
-		todo.setExpires(formatter.parse(todoJson.getString("expire")));
-		todo.setLastChange(formatter.parse(todoJson.getString("lastChange")));
-		todo.setName(todoJson.getString("name"));
-		todo.setUser(UserUnmarshaller.unmarshall(todoJson.getJSONObject("user")));
-		todo.setContacts(ContactUnmarshaller.unmarshallList(todoJson.getJSONArray("contacts")));
+		todo.setDescription(todoJson.getString("description"));System.out.println(i++);
+		todo.setFavourite(todoJson.getBoolean("favourite"));System.out.println(i++);
+		todo.setFinished(todoJson.getBoolean("finished"));System.out.println(todoJson.getString("expire"));
+		todo.setExpires(new Date(todoJson.getLong("expire")));System.out.println(i++);
+		todo.setLastChange(new Date(todoJson.getLong("lastChange")));System.out.println(i++);
+		todo.setName(todoJson.getString("name"));System.out.println(i++);
+		todo.setUser(UserUnmarshaller.unmarshall(todoJson.getJSONObject("user")));System.out.println(i++);
+		todo.setContacts(ContactUnmarshaller.unmarshallList(todoJson.getJSONArray("contacts")));System.out.println(i++);
+		
 		return todo;
 	}
 
