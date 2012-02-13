@@ -94,7 +94,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 		String query = "UPDATE "
 				+ TABLE
 				+ " c SET name = ?, description = ?, finished = ?, favourite = ?, expire = ?, lastChange = ?, userId = ? "
-				+ "WHERE c.id = ?)";
+				+ "WHERE c.id = ?";
 		PreparedStatement update = this.connection.prepareStatement(query);
 		update.setString(1, entity.getName());
 		update.setString(2, entity.getDescription());
