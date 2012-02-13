@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import de.fhb.mobile.toDoList.entity.Contact;
 import de.fhb.mobile.toDoList.entity.Todo;
 import de.fhb.mobile.toDoList.entity.User;
 import de.fhb.mobile.toDoList.persistence.mapper.TodoMapper;
@@ -24,7 +25,8 @@ public class TodoDao extends PersistenceDao<Todo> {
 	/**
 	 * join table name.
 	 */
-	private static final String JOINTABLE = "todo_contact";
+	private static final String JOINTABLE = "contact";
+	private static final String MAPPINGTABLE = "todo_contact";
 
 	/**
 	 * 
@@ -40,7 +42,8 @@ public class TodoDao extends PersistenceDao<Todo> {
 	}
 
 	@Override
-	public Todo find(Todo entity) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public Todo find(Todo entity) throws SQLException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException {
 		String query = "SELECT * FROM " + TABLE + " c WHERE c.id = ?";
 
 		PreparedStatement find = this.connection.prepareStatement(query);
@@ -50,7 +53,8 @@ public class TodoDao extends PersistenceDao<Todo> {
 	}
 
 	@Override
-	public Todo findAll() throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public Todo findAll() throws SQLException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException {
 		String query = "SELECT * FROM " + TABLE;
 		PreparedStatement find = this.connection.prepareStatement(query);
 		return TodoMapper.mapToEntity(find.executeQuery());
@@ -60,8 +64,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 	public void delete(Todo entity) throws SQLException {
 		this.connection.setAutoCommit(false);
 		String query = "DELETE FROM " + TABLE + " WHERE id = ? ";
-		String queryJoin = "DELETE FROM " + JOINTABLE
-				+ " WHERE todoId = ?";
+		String queryJoin = "DELETE FROM " + MAPPINGTABLE + " WHERE todoId = ?";
 		PreparedStatement delete = this.connection.prepareStatement(query);
 		delete.setInt(1, entity.getId());
 		delete.execute();
@@ -74,6 +77,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 
 	@Override
 	public void persist(Todo entity) throws SQLException {
+		this.connection.setAutoCommit(false);
 		String query = "INSERT INTO "
 				+ TABLE
 				+ " (`name`,`description`,`finished`,`favourite`,`expire`,`lastChange`,`userId`)"
@@ -87,6 +91,32 @@ public class TodoDao extends PersistenceDao<Todo> {
 		persist.setDate(6, new java.sql.Date(System.currentTimeMillis()));
 		persist.setInt(7, entity.getUser().getId());
 		persist.executeUpdate();
+
+		// for (Contact c : entity.getContacts()) {
+		// int id = 0;
+		// if (c != null && c.getId() == 0) {
+		// String queryContact = "INSERT INTO " + JOINTABLE
+		// + " (`contactId`)" + " VALUES ( ? )";
+		// PreparedStatement persistJoin = this.connection
+		// .prepareStatement(queryContact);
+		// persistJoin.setInt(1, c.getContactId());
+		// persistJoin.executeUpdate();
+		// this.connection.commit();
+		// if(persistJoin.getGeneratedKeys().next())
+		// id = persistJoin.getGeneratedKeys().getInt(1);
+		// } else if (c != null)
+		// id = c.getId();
+		//
+		// String queryJoin = "INSERT INTO " + MAPPINGTABLE
+		// + " (`contactId`,`todoId`)" + " VALUES (?,?)";
+		// PreparedStatement persistMapping = this.connection
+		// .prepareStatement(queryJoin);
+		// persistMapping.setInt(1, id);
+		// persistMapping.setInt(2, entity.getId());
+		// persistMapping.executeUpdate();
+		// }
+		this.connection.commit();
+		this.connection.setAutoCommit(true);
 	}
 
 	@Override
@@ -113,14 +143,16 @@ public class TodoDao extends PersistenceDao<Todo> {
 	 * @param user
 	 * @return
 	 * @throws SQLException
-	 * @throws ClassNotFoundException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
+	 * @throws ClassNotFoundException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
 	 */
-	public List<Todo> findAllByUser(User user) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public List<Todo> findAllByUser(User user) throws SQLException,
+			InstantiationException, IllegalAccessException,
+			ClassNotFoundException {
 		String query = "SELECT * FROM " + TABLE + " c WHERE c.userId = ?";
 		PreparedStatement find = this.connection.prepareStatement(query);
-		find.setInt(1, 1/*user.getId()*/);
+		find.setInt(1, 1/* user.getId() */);
 		return TodoMapper.mapToEntityList(find.executeQuery());
 	}
 
