@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.fhb.mobile.toDoList.controller.marshalling.UserMarshaller;
 import de.fhb.mobile.toDoList.entity.Todo;
 import de.fhb.mobile.toDoList.entity.User;
 
@@ -21,10 +22,11 @@ import de.fhb.mobile.toDoList.entity.User;
  */
 public class TodoUnmarshaller {
 
-	public static Todo unmarshall(JSONObject todoJson) throws JSONException, ParseException {
+	public static Todo unmarshall(JSONObject todoJson) throws JSONException,
+			ParseException {
 		Todo todo = new Todo();
 		int i = 0;
-		todoJson.put("user", new User(1,"",""));
+		todoJson.put("user", UserMarshaller.marshall(new User(1, "", "")));
 		todo.setDescription(todoJson.getString("description"));
 		todo.setFavourite(todoJson.getBoolean("favourite"));
 		todo.setId(todoJson.getInt("id"));
@@ -32,9 +34,11 @@ public class TodoUnmarshaller {
 		todo.setExpires(new Date(todoJson.getLong("expire")));
 		todo.setLastChange(new Date(todoJson.getLong("lastChange")));
 		todo.setName(todoJson.getString("name"));
-		todo.setUser(UserUnmarshaller.unmarshall(todoJson.getJSONObject("user")));System.out.println(i++);
-		todo.setContacts(ContactUnmarshaller.unmarshallList(todoJson.getJSONArray("contacts")));
-		
+		todo.setUser(UserUnmarshaller.unmarshall(todoJson.getJSONObject("user")));
+		System.out.println(i++);
+		todo.setContacts(ContactUnmarshaller.unmarshallList(todoJson
+				.getJSONArray("contacts")));
+
 		return todo;
 	}
 

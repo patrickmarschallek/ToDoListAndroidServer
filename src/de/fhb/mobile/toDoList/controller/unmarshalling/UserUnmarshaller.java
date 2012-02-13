@@ -22,7 +22,6 @@ public class UserUnmarshaller {
 		User user = new User();
 		user.setId(userJson.getInt("id"));
 		user.setUsername(userJson.getString("username"));
-		user.setPassword(userJson.getString("password"));
 		return user;
 	}
 	

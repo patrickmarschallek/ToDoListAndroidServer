@@ -59,9 +59,9 @@ public class TodoDao extends PersistenceDao<Todo> {
 	@Override
 	public void delete(Todo entity) throws SQLException {
 		this.connection.setAutoCommit(false);
-		String query = "DELETE FROM " + TABLE + " t WHERE t.id = ?";
+		String query = "DELETE FROM " + TABLE + " WHERE id = ? ";
 		String queryJoin = "DELETE FROM " + JOINTABLE
-				+ " tc WHERE tc.todoId = ?";
+				+ " WHERE todoId = ?";
 		PreparedStatement delete = this.connection.prepareStatement(query);
 		delete.setInt(1, entity.getId());
 		delete.execute();
@@ -94,7 +94,7 @@ public class TodoDao extends PersistenceDao<Todo> {
 		String query = "UPDATE "
 				+ TABLE
 				+ " c SET name = ?, description = ?, finished = ?, favourite = ?, expire = ?, lastChange = ?, userId = ? "
-				+ "WHERE c.id = ?)";
+				+ "WHERE c.id = ?";
 		PreparedStatement update = this.connection.prepareStatement(query);
 		update.setString(1, entity.getName());
 		update.setString(2, entity.getDescription());
